@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+{% import "_macros.html" as macros %}
+
+{% block title %}Index - MeetBot{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello,
+        {% if current_user.is_authenticated %}
+            {{ current_user.nickname }}
+        {% else %}
+            Stranger
+        {% endif %}!
+    </h1>
+</div>
+{% if users %}
+<table class="table table-bordered">
+<caption>排行榜</caption>
+<thead>
+    <tr>
+        <td>nickname</td>
+        <td>score</td>
+    </tr>
+</thead>
+<tbody>
+    {% for user in users %}
+    <tr>
+        <td><a href="{{ url_for('.user', nickname=user.nickname) }}">{{ user.nickname }}</a></td>
+        <td>{{ user.score }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endif %}
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.index') }}
+</div>
+{% endif %}
+{% endblock %}

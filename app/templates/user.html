@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>{{ user.nickname }}</h1>
+</div>
+{% if meet_logs %}
+<table class="table table-bordered">
+    <caption>面基列表</caption>
+    <thead>
+        <tr>
+            <td>sender</td>
+            <td>affirmant</td>
+            <td>confirmed</td>
+            <td>timestamp</td>
+        </tr>
+    </thead>
+    <tbody>
+    {% for meet in meet_logs %}
+        <tr>
+            <td>{{ meet.sender.nickname }}</td>
+            <td>{{ meet.affirmant.nickname }}</td>
+            <td>{{ meet.confirmed }}</td>
+            <td>{{ meet.timestamp }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.user', nickname=user.nickname) }}
+</div>
+{% endif %}
+{% endblock %}
